@@ -25,6 +25,7 @@ public class DemoApplication {
 
         @AllArgsConstructor @Getter @Setter
         public static class Product {
+            private Long id;
             private String name;
             private String description;
             private String category;
@@ -35,11 +36,11 @@ public class DemoApplication {
 
         static  {
             products = Arrays.asList(
-                    new Product("Kayak","1인용 보트", "수상스포츠", 275.),
-                    new Product("Lifejacket","멋진 보호 장비", "수상스포츠", 48.95),
-                    new Product("Soccer Ball","FIFA 인증 규격 및 무게", "축구", 15.95),
-                    new Product("Thinking Cap","두뇌 효율 개선", "축구", 19.5),
-                    new Product("Stadium","35,000좌석 경기장", "축구", 79500.)
+                    new Product(1l,"Kayak","1인용 보트", "수상스포츠", 275.),
+                    new Product(2l,"Lifejacket","멋진 보호 장비", "수상스포츠", 48.95),
+                    new Product(3l,"Soccer Ball","FIFA 인증 규격 및 무게", "축구", 15.95),
+                    new Product(4l,"Thinking Cap","두뇌 효율 개선", "축구", 19.5),
+                    new Product(5l,"Stadium","35,000좌석 경기장", "축구", 79500.)
             );
         }
 
