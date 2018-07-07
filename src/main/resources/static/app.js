@@ -2,16 +2,25 @@
 angular.module('sportsStore', ['customFilters', 'cart', 'ngRoute'])
     .config(function ($routeProvider) {
 
+        $routeProvider.when('/complete', {
+            templateUrl: '/static/views/thankYou.html'
+        });
+
+        $routeProvider.when('/placeorder', {
+            templateUrl: '/static/views/placeOrder.html'
+        });
+
+
         $routeProvider.when('/checkout', {
-            templateUrl: '/views/checkoutSummary.html'
+            templateUrl: '/static/views/checkoutSummary.html'
         });
 
         $routeProvider.when('/products', {
-            templateUrl: '/views/productList.html'
+            templateUrl: '/static/views/productList.html'
         });
 
         $routeProvider.otherwise({
-            templateUrl: '/views/productList.html'
+            templateUrl: '/static/views/productList.html'
         });
 
     });

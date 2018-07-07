@@ -27,7 +27,8 @@ angular.module('cart', [])
             removeProduct: function (id) {
                 for(var i=0; i<cartData.length; i++) {
                     if(cartData[i].id === id) {
-                        cartData.slice(i, 1);
+                        cartData.splice(i, 1);
+                        console.log(cartData);
                         break;
                     }
                 }
@@ -41,7 +42,7 @@ angular.module('cart', [])
     .directive('cartSummary', function (cart) {
         return {
             restrict: 'E',
-            templateUrl: '/components/cart/cartSummary.html',
+            templateUrl: '/static/components/cart/cartSummary.html',
             controller: function ($scope) {
                 var cartData = cart.getProducts();
 
