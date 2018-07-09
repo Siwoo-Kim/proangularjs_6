@@ -1,5 +1,5 @@
 
-angular.module("sportsStoreAdmin", ["ngRoute"])
+angular.module("sportsStoreAdmin", ["ngRoute", "ngResource"])
     .config(function ($routeProvider) {
 
         $routeProvider.when("/login", {

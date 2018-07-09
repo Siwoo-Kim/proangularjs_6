@@ -7,10 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -48,7 +45,7 @@ public class DemoApplication extends WebMvcConfigurationSupport {
     @RestController
     public static class SportsStoreController {
 
-        @NoArgsConstructor
+        @NoArgsConstructor @ToString
         @AllArgsConstructor @Getter @Setter
         public static class Product {
             private Long id;
@@ -83,31 +80,76 @@ public class DemoApplication extends WebMvcConfigurationSupport {
 
 
         public static List<Product> products = new ArrayList<>();
+        public static List<Order> orders = new ArrayList<>();
 
         static  {
-            products = Arrays.asList(
-                    new Product(1l,"Kayak","1인용 보트", "수상스포츠", 275.),
-                    new Product(2l,"Lifejacket","멋진 보호 장비", "수상스포츠", 48.95),
-                    new Product(3l,"Soccer Ball","FIFA 인증 규격 및 무게", "축구", 15.95),
-                    new Product(4l,"Thinking Cap","두뇌 효율 개선", "축구", 19.5),
-                    new Product(5l,"Stadium","35,000좌석 경기장", "축구", 79500.)
-            );
+            products = new ArrayList<>();
+
+            products.add(new Product(1l,"Kayak","1인용 보트", "수상스포츠", 275.));
+            products.add(new Product(2l,"Lifejacket","멋진 보호 장비", "수상스포츠", 48.95));
+            products.add(new Product(3l,"Soccer Ball","FIFA 인증 규격 및 무게", "축구", 15.95));
+            products.add(new Product(4l,"Thinking Cap","두뇌 효율 개선", "축구", 19.5));
+            products.add(new Product(5l,"Stadium","35,000좌석 경기장", "축구", 79500.));
         }
 
         @GetMapping("/products")
         public List<Product> products() {
+            System.out.println("Get /products");
             return products;
+        }
+
+        @PostMapping("/products")
+        public Product save(@RequestBody Product product) {
+            System.out.println("Post /products");
+            System.out.println(product);
+            products.add(product);
+            return product;
+        }
+
+        @DeleteMapping("/products/{id}")
+        public void delete(@PathVariable Long id) {
+            System.out.println("Delete /products");
+            products.stream()
+                    .filter(_product -> _product.id.equals(id))
+                    .findFirst()
+                    .ifPresent(_product -> products.remove(_product));
+            System.out.println(products);
+        }
+
+        @PostMapping("/products/{id}")
+        public Product update(@RequestBody Product product, @PathVariable Long id) {
+            System.out.println("Update /products");
+
+            products.stream()
+                    .filter(_product -> _product.id.equals(product.id))
+                    .findFirst()
+                    .ifPresent(_product -> {
+                        _product.setCategory(product.getCategory());
+                        _product.setName(product.getName());
+                        _product.setDescription(product.getDescription());
+                        _product.setPrice(product.getPrice());
+                    });
+            return product;
         }
 
         @PostMapping("/orders")
         public Order order(@RequestBody Order order) {
             System.out.println(order);
             createOrder(order);
+            System.out.println(orders);
             return order;
+        }
+
+        @GetMapping("/orders")
+        public List<Order> getAll() {
+            System.out.println("Triggered");
+            System.out.println(orders);
+            return orders;
         }
 
         private void createOrder(Order order) {
             order.setId(Order.assignId());
+            orders.add(order);
         }
 
     }

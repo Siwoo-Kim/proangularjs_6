@@ -1,4 +1,14 @@
 
-<div class="well">
-    This is the main view
+<div class="card card-default row" ng-controller="mainCtrl">
+    <div class="col-3 card-body">
+        <a ng-repeat="item in screens"
+           ng-class="{'btn-primary': item === current }"
+           ng-click="setScreen($index)"
+           class="btn btn-block btn-default">
+            {{ item }}
+        </a>
+    </div>
+    <div class="col-8 card-body">
+        <div ng-include="getScreen()"></div>
+    </div>
 </div>
